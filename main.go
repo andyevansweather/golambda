@@ -4,7 +4,6 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/events"
 	"fmt"
-	"encoding/json"
 )
 
 type response struct {
