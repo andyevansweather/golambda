@@ -5,13 +5,13 @@ import subprocess
 
 print('deleting old zip file')
 try:
-    os.remove('index.zip')
+    os.remove('main.zip')
     print('old zip file deleted')
 except:
     print('no index file to delete')
 
 print('creating archive')
-with zipfile.ZipFile('deployment.zip', mode='w') as zf:
+with zipfile.ZipFile('main.zip', mode='w') as zf:
     print('adding new zip file')
     zf.write('main')
     #cmd='aws lambda --region eu-west-1 --profile motis update-function-code --function-name UpdateSubscription --zip-file fileb://index.zip'
