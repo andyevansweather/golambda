@@ -4,6 +4,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/events"
 	"fmt"
+	"encoding/json"
 )
 
 type response struct {
@@ -11,18 +12,20 @@ type response struct {
 	age  int
 }
 
-type beach struct {
+type Beach struct {
 	beach string
 }
 
+
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	fmt.Printf("test request is %s\n", request)
+	fmt.Printf("test request is %s\n", request.Body)
 	fmt.Printf("entered the handler\n")
 
+	// Returned result
 	var goodBeaches [10]string
-	goodBeaches[0] = "before change"
+	goodBeaches[0] = "before change\n"
 
-	fmt.Printf("before all of the changes")
+	fmt.Printf("before all of the changes\n")
 	fmt.Printf(goodBeaches[0])
 
 	// Create pointer to beaches to go to database

@@ -27,15 +27,15 @@ func scanDynamoDBItems(beaches *[10]string) {
 
 	// Printing out all the beaches from Beaches database
 	for i := 0; i < len(test.Items); i++ {
-		fmt.Println("this beach is")
-		fmt.Println(test.Items[i]["beach"].S)
+		//fmt.Println("this beach is")
+		//fmt.Println(test.Items[i]["beach"].S)
 		var test2 *dynamodb.AttributeValue = test.Items[i]["beach"]
 
-		fmt.Println("pointers before and after")
-		fmt.Println(test2.S)
+		//fmt.Println("pointers before and after")
+		//fmt.Println(test2.S)
 
 		// retrieves value held at the pointer
-		fmt.Println(*test2.S)
+		//fmt.Println(*test2.S)
 
 		if strings.Compare(*test2.S, "Exmouth") == 0 {
 			//*beaches = append(*beaches, "Exmouth")
