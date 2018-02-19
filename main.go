@@ -16,7 +16,9 @@ type Beach struct {
 	beach string
 }
 
-
+/**
+	Main handler for the application - generic lambda entry point
+ */
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	fmt.Printf("test request is %s\n", request.Body)
 	fmt.Printf("entered the handler\n")
