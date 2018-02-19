@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"reflect"
+	"strings"
 )
 
 type response struct {
@@ -33,10 +33,7 @@ func getValues(dynamodbvalue *string, localstorage *string) {
 	fmt.Printf(*dynamodbvalue)
 }
 
-func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	fmt.Printf("test request is %s\n", request)
-	fmt.Printf("entered the handler\n")
-
+func scanDynamoDBItems(beaches *[10]string) {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("eu-west-1")},
 	)
@@ -53,10 +50,6 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	fmt.Printf("the value is %s and the error is %s \n", test.Items, errorm)
 
-	//var testValue string = "hello"
-
-	//var ptrTestValue *string = &testValue
-
 	// Printing out all the beaches from Beaches database
 	for i := 0; i < len(test.Items); i++ {
 		fmt.Println("this beach is")
@@ -69,11 +62,32 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		// retrieves value held at the pointer
 		fmt.Println(*test2.S)
 
-		// attempt at logging out values
-		fmt.Println(reflect.TypeOf(test.Items[i]["beach"]))
+		if strings.Compare(*test2.S, "Exmouth") == 0 {
+			//*beaches = append(*beaches, "Exmouth")
+			beaches[0] = "test"
+		}
 	}
+}
 
-	fmt.Printf("entered the handler %s\n", input)
+func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	fmt.Printf("test request is %s\n", request)
+	fmt.Printf("entered the handler\n")
+
+	var goodBeaches [10]string
+	goodBeaches[0] = "before change"
+
+	fmt.Printf("before all of the changes")
+	fmt.Printf(goodBeaches[0])
+
+	// Create pointer to beaches to go to database
+	var goodBeachesRef *[10]string = &goodBeaches
+
+	scanDynamoDBItems(goodBeachesRef)
+
+	fmt.Printf("what are the suitable beaches??\n")
+	fmt.Printf(goodBeaches[0])
+
+
 	return events.APIGatewayProxyResponse{
 		Body:       "Hello " + request.Body + " the output is ",
 		StatusCode: 200,
